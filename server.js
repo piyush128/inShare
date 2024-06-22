@@ -1,12 +1,22 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const cors = require('cors');
 
 app.use(express.static('public'));
 app.use(express.json());
 
 const connectDB = require('./config/db');
 connectDB();
+
+// Cors
+const corsOption = {
+    origin: process.env.ALLOWED_CLIENTS.split(',')
+    // ['http://localhost:3000', 'http://localhost:5000', 'http://localhost:5300']
+
+}
+
+app.use(cors(corsOption));
 
 // Template Engine
 app.set('views', path.join(__dirname,'/views'));
